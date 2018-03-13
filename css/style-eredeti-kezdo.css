@@ -1,0 +1,316 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+/* Reset: */
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    /* font-size: 10px; */
+    /* setting this for setting up rem units in the whole code */
+    /* 1 rem is 10px
+    so we devide every units by 10 */
+
+    /* de h a 10px-t is relative egysegkent adjuk meg, px helyett %-ban irjuk: */
+    font-size: 62.5%;
+    /* ez 10px!!! */
+}
+
+/* basic font setting for every element: */
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    /* font-size: 16px; */
+    line-height: 1.7;
+    color: #777;
+    padding: 3rem;
+    /* keret around the whole page - 30px */
+    box-sizing: border-box;
+}
+
+/* HEADER:
+================================================================================================= */
+/* 2 main part in header:
+    - logo-box for logo
+    - text-box for text + button */
+
+.header {
+    height: 95vh;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba(126, 213, 111, 0.8),
+        rgba(40, 180, 133, 0.8)),
+        url('../img/hero.jpg');
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%)
+}
+/* 1) */
+.logo-box {
+    position: absolute;
+    /* + set relative position to header! ahhoz fog igazodni, nem az ablakhoz */
+    top: 4rem;
+    left: 4rem;
+}
+
+.logo {
+    height: 3.5rem;
+}
+
+/* animation on logo only on hover */
+.logo:hover {
+    animation: moveInRight 1s ease-out;
+}
+/* 2) */
+.text-box {
+    position: absolute;
+    /* to the relative parent - header! */
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    /* text align is for the button! */
+}
+
+/* -----------------------------------
+FELIRAT in header/text-box */
+.heading-primary {
+    color: #fff;
+    text-transform: uppercase;
+
+    backface-visibility: hidden;
+    /* to fix the animation shaking */
+    margin-bottom: 6rem;
+}
+
+.heading-primary-main {
+    font-size: 6rem;
+    display: block;
+    letter-spacing: 3.5rem;
+    font-weight: 400;
+
+    /* for animating the felirat: */
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+
+    /* timing-on finomit */
+    animation-timing-function: ease-out;
+
+    /* egyeb funkciok, de nem fontos itt:
+    (vmennyivel kesobb, ill hanyszor)
+    animation-delay: 3s;
+    animation-iteration-count: 3; */
+}
+
+.heading-primary-sub {
+    display: block;
+    font-size: 2rem;
+    letter-spacing: 1.75rem;
+    font-weight: 700;
+
+    /* for animation(roviditve): */
+    animation: moveInRight 1s ease-out;
+}
+/* ------------------------------------ */
+/* Felirat in header END */
+
+
+/*
+BUTTON in header
+------------------------------------------- */
+.btn:link,
+.btn:visited {
+/* initial state     */
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.5rem 4rem;
+    display: inline-block;
+    border-radius: 10rem;
+    transition: all .2s;
+    position: relative;
+    /* hogy az after pseudo el-t ehhez tudjuk pozicionalni! */
+    font-size: 1.6rem;
+
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.2);
+}
+
+.btn-white {
+    background: #fff;
+    color: #777;
+}
+
+/* Effect for the button
+ - . - . - . - . - . - . - . - . - */
+.btn::after {
+    content: "";
+    display: inline-block;
+    /* just like the parent-button  */
+    height: 100%;
+    width: 100%;
+    /* igazodik a parent-button widht-hez es height-hoz a 100% ertekkel */
+    border-radius: 10rem;
+
+    /* most nagyobbnak nez ki a button bc kiegesziti.
+    pont oda kell pozicionalni, ahol az eredeti button van!
+    szoval pozicionaljuk absolut-tal + relative-ot hozzaadjuk az eredeti buttonhoz!! */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Azert 0 az ertek, mert pont ugyan oda akarjuk, vagyis gyakorlatilag nem mozditjuk el! */
+
+    /* DE! */
+    /* most a pseudo el ugyanott van mint a button, de fellette. Ala kell tenni: */
+    z-index: -1;
+    transition: all .4s;
+    /* this transition for the opacity effect on .btn:hover::after! */
+}
+
+.btn-white::after {
+    background-color: #fff;
+}
+
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
+/* - . - . - . - . - . - . - . - END */
+
+
+/* Animation on the button in header: - to move upward*/
+/* - . - . - . - . - . - . - . - */
+.btn-animated {
+    animation: moveInButton .5s ease-out;
+    animation-delay: .75;
+    animation-fill-mode: backwards;
+    /* elvileg h a button addig ne legyen eredetileg lathato, mielott az animacio kezdodik
+    nalam actually mukodott enelkul is */
+}
+/* - . - . - . - . - . - . - . - END */
+/* -------------------------------------------------
+BUTTON in header END */
+
+/*
+========================================================================================
+HEADER END */
+
+/* ANIMATIONS:
+====================================================================================== */
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem);
+    }
+
+    80% {
+        transform: translateX(1rem);
+
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(10rem);
+    }
+
+    80% {
+        transform: translateX(-1rem);
+
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveInButton {
+    0% {
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+/*
+======================================================================================
+ ANIMATION  END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* . */

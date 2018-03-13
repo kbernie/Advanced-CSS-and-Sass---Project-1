@@ -1,0 +1,62 @@
+
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+// MEDIA QUERY MANAGER:
+//
+// 0-600px:     Phone
+// 600-900px:   Tablet Portrait
+// 900-1200px:  Tablet landscape
+// [1200-1800:  Desktop - our mormal style applies]
+// 1800 + :     Big Desktop
+
+
+@mixin respond-phone {
+    @media (max-width: 600px) {
+        @content
+    };
+}
+
+// $brakepoint argument name choices:
+// - phone
+// - tab-port
+// - tab-land
+// - big-desktop
+
+// we use em unit here which relates to the browser font-size: 16px -
+// regardless of the default fon-size we set as default in base.html
+// em better in media quieries than rem or px
+
+// ORDER: Base + typography > general layout + grid > page layout  > components
+
+// 1em = 16px  (x px / 16)
+@mixin respond($brakepoint) {
+    @if $brakepoint == phone {
+        @media only screen and (max-width: 37.5em) { @content };   // 600px  (0-600)
+    }
+    @if $brakepoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content };   // 900px  (600-900)
+    }
+    @if $brakepoint == tab-land {
+        @media only screen and (max-width: 75em) { @content };   // 1200px  (900-1200)
+    }
+
+//                      when we don't use any media query  -->  (1200-1800)
+
+    @if $brakepoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content };   // 1800px  (1800 +)
+    }
+}
